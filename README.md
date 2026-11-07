@@ -63,8 +63,9 @@ Tool confirms APP_READY and matching live identity after END/reset.
 UART0 TX P0_2/115200 shows image tag and `log(timer)-V1` with an increasing counter.
 The App inherits Boot clocks and selects its independent full interrupt table.
 
-Offline build/image/model tests are available;physical CAN/Flash/IRQ/reset
-and interruption tests are NOT RUN.
+Linked-image guards check metadata and IRQ layout. Hardware acceptance is specific
+to the board and interface configuration; software models do not establish
+reset or interrupted-update fault coverage.
 See the [RH850 guide](https://released.github.io/slide_boot_loader_for_RL78/#rh850-can-device)
 and [Tool operation](https://released.github.io/slide_simple_renesas_isp_tool/#tool-operation).
 

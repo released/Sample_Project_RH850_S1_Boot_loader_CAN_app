@@ -6,6 +6,10 @@
 #include "r_smc_entry.h"
 #include "custom_func.h"
 #include "retarget.h"
+#define UART0_CONSOLE_RH850 1
+void Device_RequestReset(unsigned long request);
+#define UART0_CONSOLE_RESET() Device_RequestReset(0UL)
+#include "uart0_reset_console.inc"
 #include "device_platform.h"
 #include "can_boot_config.h"
 #ifdef RH850_DEVICE_APP
@@ -289,6 +293,7 @@ void hardware_init(void)
     g_custom_health = 0x10300UL | ((g_custom_flags & BOOT_APP_UPDATED_FLAG) ? 0x20000UL : 0UL);
     g_custom_last = Device_Millis();
     g_custom_counter = 0UL;
+    tiny_printf("UART0 console: z/Z reset\r\n");
 }
 
 /* Foreground service point called repeatedly by the selected main adapter.
@@ -297,6 +302,8 @@ void hardware_init(void)
  */
 void loop(void)
 {
+    Uart0ResetPoll();
+
 
     if (Device_Millis())
     {
